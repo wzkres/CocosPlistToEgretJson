@@ -15,24 +15,24 @@ if (!fs.existsSync(plistFilePath)) {
 
 const parsedPlist = plist.parse(fs.readFileSync(plistFilePath, "utf8"));
 // console.log(JSON.stringify(obj));
-var exportJson = {};
+let exportJson = {};
 
 exportJson["file"] = parsedPlist.metadata.textureFileName;
 exportJson["frames"] = {};
 
-for (var key in parsedPlist.frames) {
-    var frame = parsedPlist.frames[key];
+for (let key in parsedPlist.frames) {
+    let frame = parsedPlist.frames[key];
 
-    var posSizeJson = frame.frame.replace(/\{/g, "[").replace(/\}/g, "]");
-    var posSize = JSON.parse(posSizeJson);
+    let posSizeJson = frame.frame.replace(/\{/g, "[").replace(/\}/g, "]");
+    let posSize = JSON.parse(posSizeJson);
 
-    var offsetJson = frame.offset.replace(/\{/g, "[").replace(/\}/g, "]");
-    var offset = JSON.parse(offsetJson);
+    let offsetJson = frame.offset.replace(/\{/g, "[").replace(/\}/g, "]");
+    let offset = JSON.parse(offsetJson);
 
-    var ssizeJson = frame.sourceSize.replace(/\{/g, "[").replace(/\}/g, "]");
-    var ssize = JSON.parse(ssizeJson);
+    let ssizeJson = frame.sourceSize.replace(/\{/g, "[").replace(/\}/g, "]");
+    let ssize = JSON.parse(ssizeJson);
 
-    var entry = {};
+    let entry = {};
     entry["x"] = posSize[0][0];
     entry["y"] = posSize[0][1];
     entry["w"] = posSize[1][0];
@@ -45,8 +45,8 @@ for (var key in parsedPlist.frames) {
     exportJson["frames"][key] = entry;
 }
 
-var exportString = JSON.stringify(exportJson, null, 2);
-var exportFilePath = plistFilePath.replace(".plist", ".json");
+let exportString = JSON.stringify(exportJson, null, 2);
+let exportFilePath = plistFilePath.replace(".plist", ".json");
 
 fs.writeFileSync(exportFilePath, exportString, "utf8");
 
